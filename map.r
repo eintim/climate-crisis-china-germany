@@ -3,13 +3,14 @@ library(dplyr)
 
 # Load data
 energy <- readr::read_csv('https://nyc3.digitaloceanspaces.com/owid-public/data/energy/owid-energy-data.csv')
+co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv')
 
 # Load map data
 world_map <- map_data("world")
 
 # Filter data
 energy.2021 <- energy %>%
-  filter(year == 2015) %>%  # Keep data for 2021
+  filter(year == 2021) %>%  # Keep data for 2021
   select(country, energy_per_capita) %>%  # Select the two columns of interest
   rename(region = country) %>%  # Rename column
   # Replace "United States of America" by USA in the region column
