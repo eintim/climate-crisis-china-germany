@@ -37,3 +37,7 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Quarto Dateien
+/Ausarbeitung R_files
+*.html
