@@ -8,15 +8,25 @@ metadata-files:
 # '[...],aber China[...]' Das Todschlagargument in Klimadebatten
 
 <!-- Definition/Formulierung der Fragestellung -->
-## Test [@BibEntry2022Dec]
-<!-- Center this div -->
-<div>
-  <blockquote class="twitter-tweet"><p lang="zxx" dir="ltr"><a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a></p>&mdash; Oliver Luksic (@OlliLuksic) <a href="https://twitter.com/OlliLuksic/status/1591531008754589704?ref_src=twsrc%5Etfw">November 12, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-</div>
+## Fragestellung
 
+Die Klimakrise ist eines der drängendsten Probleme unserer Zeit und betrifft uns alle. Die Frage der Verantwortlichkeit wird dabei häufiger gestellt statt Lösungen für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas genannt, da das Land der größte CO2-Emittent der Welt ist. 
+
+Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der westlichen Industriestaaten wie Deutschland heruntergespielt. Bspw. hat FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet [@FDP-Tweet] genau dies versucht. In dem Tweet vergleicht er die jährlichen CO2 Emissionen Chinas und Deutschlands.
+
+<blockquote class="twitter-tweet"><p lang="zxx" dir="ltr"><a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a></p>&mdash; Oliver Luksic (@OlliLuksic) <a href="https://twitter.com/OlliLuksic/status/1591531008754589704?ref_src=twsrc%5Etfw">November 12, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+Luksic wurde hier massiv kritisiert, da der einfache Vergleich der jährlichen Emissionen nicht das vollständige Bild zeigt.
+
+Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben. 
 
 <!-- Laden der Daten -->
+## Laden von Daten
+Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, betrachten wir zwei Datensätze. 
 
+``` {.r}
+
+```
 <!-- Bearbeiten/Transformieren der Daten -->
 
 <!-- Geeignete Visualisierung und Aggregation der Daten -->
