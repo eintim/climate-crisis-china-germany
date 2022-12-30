@@ -1,6 +1,7 @@
 ---
 title: "Ausarbeitung R"
 author: "Theo Krinitz, Tim Horlacher"
+toc: true
 metadata-files: 
   - Quarto Settings/quartosettings.yaml
 ---
@@ -28,10 +29,13 @@ Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, bet
 
 ```
 <!-- Bearbeiten/Transformieren der Daten -->
+## Bearbeiten und Transformieren der Daten
 
 <!-- Geeignete Visualisierung und Aggregation der Daten -->
+## Visualisierung und Aggregation der Daten
 
 <!-- Zusammenfassung und Schlussfolgerung -->
+## Fazit
 
 ## Quellen
 ::: {#refs}
