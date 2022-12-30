@@ -8,27 +8,49 @@ library(transformr)
 energy <- readr::read_csv('https://nyc3.digitaloceanspaces.com/owid-public/data/energy/owid-energy-data.csv')
 co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv')
 
-# Load map data
-world_map <- map_data("world")
-
-
 # Filter data
-energy.2021 <- energy %>%
-  filter(year == 2021) %>%  # Keep data for 2021
-  select(country, energy_per_capita) %>%  # Select the two columns of interest
-  rename(region = country) %>%  # Rename column
-  # Replace "United States of America" by USA in the region column
-  mutate(
-    region = ifelse(region == "United States", "USA", region),
-    region = ifelse(region == "United Kingdom", "UK", region),
-    region = ifelse(region == "Congo", "Republic of Congo", region),
-    region = ifelse(region == "Czechia", "Czech Republic", region),
-    region = ifelse(region == "Democratic Republic of Congo", "Democratic Republic of the Congo", region),
-    region = ifelse(region == "Cote d'Ivoire", "Ivory Coast", region)
-  )  
+energy.2019 <- energy %>%
+  filter(year == 2019) %>%  # Keep data for 2019
+  select(country, iso_code, energy_per_capita) # Select the two columns of interest
 
-# Merge data
-energy.map <- left_join(world_map, energy.data, by= c("region"))
+library(sf)
+library(giscoR)
+
+
+# European countries
+#https://epsg.io/3035
+epsg_code <- 3035
+EU_countries <- gisco_get_countries(region = "Europe") %>%
+  st_transform(epsg_code)
+EU_countries.energy <- left_join(EU_countries, energy.2019, by= c("ISO3_CODE" = "iso_code"))
+ggplot(EU_countries.energy) +
+  geom_sf(aes(fill = energy_per_capita)) +
+  xlim(c(2200000, 7150000)) +
+  ylim(c(1380000, 5500000)) +
+  labs(
+    title = "Energy per Capita in 2019",
+    subtitle = "Europe",
+    caption = paste0(
+      "Source: OurWorldInData.org/energy/, ", gisco_attributions()
+    )
+  )
+
+# Whole world
+All_countries <- gisco_get_countries() 
+All_countries.energy <- left_join(All_countries, energy.2019, by= c("ISO3_CODE" = "iso_code"))
+ggplot(All_countries.energy) +
+  geom_sf(aes(fill = energy_per_capita)) +
+  labs(
+    title = "Energy per Capita in 2019",
+    subtitle = "World",
+    caption = paste0(
+      "Source: OurWorldInData.org/energy/, ", gisco_attributions()
+    )
+  )
+
+
+
+#Gif Stuff
 
 # Draw Map
 ggplot(energy.map, aes(long, lat, group = group))+
