@@ -5,23 +5,24 @@ metadata-files:
   - Quarto Settings/quartosettings.yaml
 ---
 
-## Quarto
+# '[...],aber China[...]' Das Todschlagargument in Klimadebatten
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+<!-- Definition/Formulierung der Fragestellung -->
+## Test [@BibEntry2022Dec]
+<!-- Center this div -->
+<div>
+  <blockquote class="twitter-tweet"><p lang="zxx" dir="ltr"><a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a></p>&mdash; Oliver Luksic (@OlliLuksic) <a href="https://twitter.com/OlliLuksic/status/1591531008754589704?ref_src=twsrc%5Etfw">November 12, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+</div>
 
-## Running Code
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+<!-- Laden der Daten -->
 
-```{r}
-1 + 1
-```
+<!-- Bearbeiten/Transformieren der Daten -->
 
-You can add options to executable code like this 
+<!-- Geeignete Visualisierung und Aggregation der Daten -->
 
-```{r}
-#| echo: false
-2 * 2
-```
+<!-- Zusammenfassung und Schlussfolgerung -->
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Quellen
+::: {#refs}
+:::
