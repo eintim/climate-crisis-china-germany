@@ -16,8 +16,22 @@ energy.2019 <- energy %>%
 library(sf)
 library(giscoR)
 
+co2.china <- co2 %>%
+  filter(country == 'Japan' | country == 'Germany')
 
-# European countries
+co2.china %>%
+  ggplot() +
+  geom_line(aes(x = year, y = co2, color = country))
+
+co2.china %>%
+  ggplot() +
+  geom_line(aes(x = year, y = population, color = country))
+
+co2.china %>%
+  ggplot() +
+  geom_line(aes(x = year, y = gdp/population, color = country))
+
+#European countries
 #https://epsg.io/3035
 epsg_code <- 3035
 EU_countries <- gisco_get_countries(region = "Europe") %>%
