@@ -160,7 +160,7 @@ energy %>%
   ) %>%
   ggplot() +
   geom_stream(aes(x = year, y = energy_consumption, fill = energy_source), type = "ridge") +
-  labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in Deutschland in TWh')
+  labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in China in TWh')
 ```
 
 Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden jedoch eher als zusätzliche Energiequelle verwendet statt fossile Energieträger abzulösen. Es wurde im Gegensatz zu Detschland aber deutlich stärker in Wasserkraft investiert, was aber auch geographische Hintergründe hat. Dadurch schadet China seinen Nachbarn wie Vietnam, da Flüsse immer weniger Wasser führen [@Lenz2020May].
