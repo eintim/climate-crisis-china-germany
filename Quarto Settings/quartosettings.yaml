@@ -1,3 +1,11 @@
 format: 
   html
 bibliography: sources.bibtex
+engine: knitr
+editor_options: 
+  chunk_output_type: inline
+  code-overflow: wrap
+execute: 
+  cache: true
+  warning: false
+  echo: true

@@ -4,14 +4,6 @@ author: "Theo Krinitz, Tim Horlacher"
 toc: true
 metadata-files: 
   - Quarto Settings/quartosettings.yaml
-
-engine: knitr
-editor_options: 
-  chunk_output_type: inline
-  code-overflow: wrap
-execute: 
-  cache: true
-  warning: false
 ---
 
 # '[...],aber China[...]' Das Todschlagargument in Klimadebatten
@@ -35,12 +27,65 @@ Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, bet
 
 ``` {r}
 library(tidyverse)
-energy <- readr::read_csv('https://nyc3.digitaloceanspaces.com/owid-public/data/energy/owid-energy-data.csv', show_col_types = FALSE)
+energy <- readr::read_csv('https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv', show_col_types = FALSE)
 co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv', show_col_types = FALSE)
 ```
 
 <!-- Bearbeiten/Transformieren der Daten -->
 ## Bearbeiten und Transformieren der Daten
+
+Beide Datensätze beinhalten gleiche Spalten, wie Bevölkerungsdaten oder Bruttoinlandsprodukte. Um eine Vergleichbarkeit beider Datensätze zu garantieren, werden beide Daten miteinander verglichen. Zwar stammen beide aus der selben Quelle [@OWID-Github], dennoch ist nicht garantiert, das die Daten übereinstimmen.
+
+```{r}
+#| echo: false
+energy.filtered <- energy %>%
+  filter(country == 'Germany') %>%
+  select(country, year, gdp, population)
+
+co2.filtered <- co2 %>%
+  filter(country == 'Germany') %>%
+  select(country, year, gdp, population)
+```
+
+```{r}
+#| label: fig-comparison_energy_and_co2_dataset
+#| fig-cap: Jährliches BIP in Deutschland
+
+ggplot() +
+  geom_line(data = co2.filtered, aes(x = year, y = gdp, color = "CO2")) +
+  geom_line(data = energy.filtered, aes(x = year, y = gdp, color = "Energy")) +
+  labs(
+    title = NULL,
+    x = "Jahr",
+    y = "Bruttoinlandsprodukt"
+  ) +
+  scale_color_manual(
+    name = "Datensatz",
+    breaks = c('CO2', "Energy"),
+    values = c("CO2" = "#f8766d", "Energy" = "#00bfc4")
+    )
+```
+
+```{r}
+#| label: fig-comparison_energy_and_co2_dataset_2
+#| fig-cap: Jährliche Einwohnerzahlen in Deutschland
+
+ggplot() +
+  geom_line(data = co2.filtered, aes(x = year, y = population, color = "CO2")) +
+  geom_line(data = energy.filtered, aes(x = year, y = population, color = "Energy")) +
+  labs(
+    title = NULL,
+    x = "Jahr",
+    y = "Einwohnerzahlen"
+  ) + 
+  scale_color_manual(
+    name = "Datensatz",
+    breaks = c('CO2', "Energy"),
+    values = c("CO2" = "#f8766d", "Energy" = "#00bfc4")
+    )
+```
+
+In beiden Datensätzen liegen die Daten exakt aufeinander (vgl. @fig-comparison_energy_and_co2_dataset, @fig-comparison_energy_and_co2_dataset_2). Der Energy-Datensatz reicht zwar nur bis 1900 zurück, was jedoch ausreichend ist. Beide Datensätze lassen sich direkt miteinander vergleichen. 
 
 <!-- Geeignete Visualisierung und Aggregation der Daten -->
 ## Visualisierung und Aggregation der Daten
@@ -77,30 +122,106 @@ co2 %>%
   )
 ```
 
-In diesem Plot (@fig-co2_per_year_per_captia) sind die Bevölkerungsgrößen mit einberechnet. Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ ausgestoßen hat. Insbesondere das Wirtschaftswunder in Deutschland war stark auf Kohle und Öl aufgebaut (vgl. @fig-co2_per_year_per_fossil_fuel).
+In diesem Plot (@fig-co2_per_year_per_captia) sind die Bevölkerungsgrößen mit einberechnet. Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ ausgestoßen hat. Insbesondere das Wirtschaftswunder in Deutschland war stark auf Kohle und Öl aufgebaut (vgl. @fig-energy_distribution_germany). China und Deutschland haben 2021 ca. gleich viele CO₂ Emissionen pro Einwohner ausgestoßen. Trotzdem ist festzuhalten, dass in den letzten 20 Jahren die Tendenz in Deutschland sinkend war, während Chinas aggressive Wirtschaftspolitik immer mehr Emissionen in Kauf genommen hatte. Zwar kommen erneuerbare Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler Atomkraftwerke [@AKW-Abschaltungen] noch wichtiger geworden. Jedoch ist das Ziel bis 2022 vollständig aus der Atomkraft auszusteigen nicht erreicht worden.
+
+```{r}
+#| label: fig-energy_distribution_germany
+#| fig-cap: Jährlicher Energie-Verbrauch in Deutschland aufgeteilt nach Energiequelle
+
+library(ggstream)
+
+energy %>%
+  filter(country == "Germany") %>%
+  select(year, country, population, ends_with("_consumption")) %>%
+  pivot_longer(cols = c("coal_consumption", "oil_consumption", "gas_consumption", "nuclear_consumption", "biofuel_consumption","solar_consumption", "wind_consumption", "hydro_consumption", "other_renewable_consumption"),
+               names_to = "energy_source",
+               values_to = "energy_consumption") %>%
+  mutate(
+    energy_source = gsub("_consumption", "", energy_source)
+  ) %>%
+  ggplot() +
+  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source), type = "ridge") +
+  labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in Deutschland in TWh')
+```
+
+```{r}
+#| label: fig-energy_distribution_china
+#| fig-cap: Jährlicher Energie-Verbrauch in China
+
+
+energy %>%
+  filter(country == "China") %>%
+  select(year, country, population, ends_with("_consumption")) %>%
+  pivot_longer(cols = c("coal_consumption", "oil_consumption", "gas_consumption", "nuclear_consumption", "biofuel_consumption","solar_consumption", "wind_consumption", "hydro_consumption", "other_renewable_consumption"),
+               names_to = "energy_source",
+               values_to = "energy_consumption") %>%
+  mutate(
+    energy_source = gsub("_consumption", "", energy_source)
+  ) %>%
+  ggplot() +
+  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source), type = "ridge") +
+  labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in Deutschland in TWh')
+```
+
+Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden jedoch eher als zusätzliche Energiequelle verwendet statt fossile Energieträger abzulösen. Es wurde im Gegensatz zu Detschland aber deutlich stärker in Wasserkraft investiert, was aber auch geographische Hintergründe hat. Dadurch schadet China seinen Nachbarn wie Vietnam, da Flüsse immer weniger Wasser führen [@Lenz2020May].
 
 ```{r}
 #| label: fig-co2_per_year_per_fossil_fuel
-#| fig-cap: Jährlicher Anteil der fossilen Energieträger an CO₂ Emissionen
+#| fig-cap: Jährliche CO₂ Emissionen der fossilen Energieträger
+
+
 co2 %>%
-  filter(country == "Germany" & year > 1945) %>%
-  select(country, year, co2, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) %>%
+  filter(country == "Germany" & year > 1965) %>%
+  select(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) %>%
+  pivot_longer(cols = ends_with("co2"),
+               names_to = "co2_source",
+               values_to = "co2_emissions"
+  ) %>%
+  mutate(
+    co2_source = gsub("_co2", "", co2_source)
+  ) %>%
   ggplot() +
-  #geom_line(aes(x = year, y = co2/co2, color = 'CO2')) +
-  geom_line(aes(x = year, y = coal_co2/co2, color = 'Kohle')) +
-  geom_line(aes(x = year, y = cement_co2/co2, color = 'Zement')) +
-  geom_line(aes(x = year, y = flaring_co2/co2, color = 'Gasfackeln')) +
-  geom_line(aes(x = year, y = gas_co2/co2, color = 'Gas')) +
-  geom_line(aes(x = year, y = oil_co2/co2, color = 'Öl')) +
-  expand_limits(y = c(0, 1)) +
-  scale_color_manual(
-    name = "Fossiler Energieträger",
-    breaks = c('CO2', "Kohle", "Zement", "Gasfackeln", "Gas", "Öl"),
-    values = c("CO2" = "black", "Kohle" = "#f8766d", "Zement" = "#a3a500", "Gasfackeln" = "#00bf7d", "Gas" = "#00b0f6", "Öl" = "#e76bf3")
-    ) +
-  labs(title = NULL, x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen')
+  geom_stream(aes(x = year, y = co2_emissions, fill = co2_source), type = "proportional") +
+  labs(title = "Quellen der CO₂ Emissionen Deutschland", x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt')
+
+co2 %>%
+  filter(country == "China" & year > 1965) %>%
+  select(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) %>%
+  pivot_longer(cols = ends_with("co2"),
+               names_to = "co2_source",
+               values_to = "co2_emissions"
+  ) %>%
+  mutate(
+    co2_source = gsub("_co2", "", co2_source)
+  ) %>%
+  ggplot() +
+  geom_stream(aes(x = year, y = co2_emissions, fill = co2_source), type = "proportional") +
+  labs(title = "Quellen der CO₂ Emissionen China", x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt')
 ```
 
+In den Plots (@fig-co2_per_year_per_fossil_fuel-1, @fig-co2_per_year_per_fossil_fuel-2) werden die Quellen der CO₂ Emissionen dargestellt. Festzustellen ist, dass Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des Gases aus Russland stammte [@Bundesregierung-Gas]. 
+
+In China verliert Kohle auch an Bedeutung, trotzdem stammen noch 70% der Emissionen aus Kohle. In Deutschland liegt der Anteil nur noch bei 35%. In China wird die Kohle jedoch nicht abgelöst, sondern es kommen zusätzliche Energiequellen hinzu (vgl. @fig-co2_per_year_per_fossil_fuel_china).
+
+```{r}
+#| label: fig-co2_per_year_per_fossil_fuel_china
+#| fig-cap: Jährliche CO₂ Emissionen der fossilen Energieträger
+
+co2 %>%
+  filter(country == "China" & year > 1965) %>%
+  select(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) %>%
+  pivot_longer(cols = ends_with("co2"),
+               names_to = "co2_source",
+               values_to = "co2_emissions"
+  ) %>%
+  mutate(
+    co2_source = gsub("_co2", "", co2_source)
+  ) %>%
+  ggplot() +
+  geom_stream(aes(x = year, y = co2_emissions, fill = co2_source)) +
+  labs(title = "Quellen der CO₂ Emissionen China", x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt')
+
+```
 
 
 <!-- Zusammenfassung und Schlussfolgerung -->
