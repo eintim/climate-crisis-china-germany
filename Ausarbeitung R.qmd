@@ -140,7 +140,7 @@ energy %>%
     energy_source = gsub("_consumption", "", energy_source)
   ) %>%
   ggplot() +
-  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source), type = "ridge") +
+  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source)) +
   labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in Deutschland in TWh')
 ```
 
@@ -159,7 +159,7 @@ energy %>%
     energy_source = gsub("_consumption", "", energy_source)
   ) %>%
   ggplot() +
-  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source), type = "ridge") +
+  geom_stream(aes(x = year, y = energy_consumption, fill = energy_source)) +
   labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in China in TWh')
 ```
 
