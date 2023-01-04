@@ -22,7 +22,7 @@ Luksic wurde hier massiv kritisiert, da der einfache Vergleich der jährlichen E
 Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben.
 
 Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und visualisiert.
-Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet.
+Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` [@giscoR] und `sf` [@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert.
 
 <!-- Laden der Daten -->
 ## Laden von Daten
