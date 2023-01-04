@@ -226,6 +226,33 @@ co2 %>%
 
 ```
 
+```{r}
+#| label: fig-co2_per_capita_europe
+#| fig-cap: CO₂ Emissionen pro Einwohner in Europa im Jahr 2021
+
+library(sf)
+library(giscoR)
+library(gganimate)
+
+EU_countries <- gisco_get_countries(region = "Europe") %>%
+  st_transform(3035)
+
+co2 %>%
+  filter(year > 1999) %>%
+  select(iso_code, year, co2_per_capita) %>%
+  left_join(EU_countries, ., by = c("ISO3_CODE" = "iso_code")) %>%
+  ggplot() +
+  geom_sf(aes(fill = co2_per_capita)) +
+  xlim(c(2200000, 7150000)) +
+  ylim(c(1380000, 5500000)) +
+  labs(title = 'CO₂ Emissionen pro Einwohner in Europa', subtitle = '{frame_time}') +
+  transition_time(as.integer(year)) +
+  ease_aes('linear')
+
+```
+
+In dem Plot (@fig-co2_per_capita_europe) werden die CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021 dargestellt.
+Über den Verlauf der Jahre ist in allen Ländern ein langsamer Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich zu anderen Ländern einen hohen Wert ein.
 
 <!-- Zusammenfassung und Schlussfolgerung -->
 ## Fazit
