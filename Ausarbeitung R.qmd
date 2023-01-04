@@ -148,7 +148,6 @@ energy %>%
 #| label: fig-energy_distribution_china
 #| fig-cap: Jährlicher Energie-Verbrauch in China
 
-
 energy %>%
   filter(country == "China") %>%
   select(year, country, population, ends_with("_consumption")) %>%
@@ -164,6 +163,23 @@ energy %>%
 ```
 
 Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden jedoch eher als zusätzliche Energiequelle verwendet statt fossile Energieträger abzulösen. Es wurde im Gegensatz zu Detschland aber deutlich stärker in Wasserkraft investiert, was aber auch geographische Hintergründe hat. Dadurch schadet China seinen Nachbarn wie Vietnam, da Flüsse immer weniger Wasser führen [@Lenz2020May].
+
+Trotzdem ist festzuhalten, dass der Energieverbrauch pro Einwohner in Deutschland höher ist als in China. 1965 verbauchte Deutschland 18,4-mal mehr Energie pro Einwohner als China. In 2021 verbauchte Deutschland pro Einwohner ca. 1,37-mal mehr Energie. Zwar schließt sich diese Lücke, aber nicht indem in Deutschland weniger Strom verbaucht wird, sondern indem China aufschließt (vgl. @fig-energy_per_captia). Deutschlands Tendenz sinkt, liegt aber weiterhin über dem Stand von 1965.
+
+```{r}
+#| label: fig-energy_per_captia
+#| fig-cap: Jährlicher Energie-Verbrauch pro Einwohner in kWh
+
+energy %>%
+  filter((country == "China" | country == "Germany") & year > 1965) %>%
+  select(country, year, energy_per_capita) %>%
+  ggplot() +
+  geom_line(aes(x = year, y = energy_per_capita, color = country)) + 
+  labs(title = NULL, x = "Jahr", y = "Energie-Verbrauch pro Einwohner in kWh")
+```
+
+
+In den Plots (@fig-co2_per_year_per_fossil_fuel-1, @fig-co2_per_year_per_fossil_fuel-2) werden die Quellen der CO₂ Emissionen dargestellt. Festzustellen ist, dass Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des Gases aus Russland stammte [@Bundesregierung-Gas].
 
 ```{r}
 #| label: fig-co2_per_year_per_fossil_fuel
@@ -199,8 +215,6 @@ co2 %>%
   labs(title = "Quellen der CO₂ Emissionen China", x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt')
 ```
 
-In den Plots (@fig-co2_per_year_per_fossil_fuel-1, @fig-co2_per_year_per_fossil_fuel-2) werden die Quellen der CO₂ Emissionen dargestellt. Festzustellen ist, dass Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des Gases aus Russland stammte [@Bundesregierung-Gas]. 
-
 In China verliert Kohle auch an Bedeutung, trotzdem stammen noch 70% der Emissionen aus Kohle. In Deutschland liegt der Anteil nur noch bei 35%. In China wird die Kohle jedoch nicht abgelöst, sondern es kommen zusätzliche Energiequellen hinzu (vgl. @fig-co2_per_year_per_fossil_fuel_china).
 
 ```{r}
@@ -226,6 +240,14 @@ co2 %>%
 
 <!-- Zusammenfassung und Schlussfolgerung -->
 ## Fazit
+
+Grundsätzlich wurde festgestellt, dass China ca. 17-mal mehr CO₂ im Jahr 2021 ausgestoßen hat mit Tendenz steigend. Trotzdem tragen die westlichen Industriestaaten wie Deutschland viel Verantwortung an der momentanen Klimakrise. Zum einen stößt Deutschland pro Einwohner ähnlich viele CO₂-Emissionen aus, zum anderen hat Deutschland über weite Teile seiner Geschichte deutlich mehr Emissionen produziert, worauf der aktuelle Wohlstand auch aufbaut. Zwar liegt Deutschland beim Energieverbrauch pro Person höher als China, beide Nationen sind bei den CO₂-Emissionen pro Person ungefähr gleich auf. In Deutschland sinkt dabei die Tendenz eher, während Chinas Energieverbrauch und CO₂-Emissionen stark wachsen.
+{{< pagebreak >}}
+In Deutschland wird zwar in erneuerbare Energien investiert, dies hat aber bisher nicht den erwünschten Effekt. Weiterhin stammt die überwiegende Mehrheit des in Deutschland verbrauchten Stroms aus fossilen Quellen. Zumindest sinkt die Tendenz bei den CO₂-Emissionen leicht. China im Gegensatz baut einen Großteil des Wirtschaftswachstums in den letzten Jahrzehnten auf Kohle. Zwar wird Kohle langsam abgelöst, dies aber nur mit fossilen Energieträgern.  
+{{< pagebreak >}}
+Zu bedenken ist, dass in dieser Analyse beide Länder unabhängig von einander betrachtet wurden. Dies ist im heutigen Markt nicht mehr realistisch. Sehr viele Produkte werden in China produziert und in Deutschland verkauft. Jedoch konnte dieser Blickwinkel nicht betrachtet werden. Festzuhalten ist, dass Deutschland und die westlichen Staaten ebenfalls von den Emissionen in China profitieren und viel Produktion nach China verlagert wurde.
+{{< pagebreak >}}
+Das ändert jedoch nicht, dass die Emissionen ausgestoßen wurden und werden. Seit dem Klimaabkommen 2015 ist beklagend wenig Fortschritt zu beobachten. Besonders tragisch ist, dass die Tendenz eher steigend ist und damit die Abwendung einer Klimakatastrophe immer unwahrscheinlicher wird.
 
 ## Quellen
 ::: {#refs}
