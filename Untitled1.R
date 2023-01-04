@@ -74,5 +74,12 @@ co2 %>%
     values = c("CO2" = "black", "Kohle" = "#f8766d", "Zement" = "#a3a500", "Gasfackeln" = "#00bf7d", "Gas" = "#00b0f6", "Öl" = "#e76bf3")
   ) +
   labs(title = NULL, x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen')
+
+energy %>%
+  filter((country == "China" | country == "Germany") & year > 1965) %>%
+  select(country, year, energy_per_capita) %>%
+  ggplot() +
+  geom_line(aes(x = year, y = energy_per_capita, color = country)) + 
+  labs(title = NULL, x = "Jahr", y = "Energie-Verbrauch pro Einwohner in kWh")
   
 
