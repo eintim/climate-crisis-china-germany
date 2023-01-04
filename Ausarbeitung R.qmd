@@ -19,11 +19,14 @@ Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der west
 
 Luksic wurde hier massiv kritisiert, da der einfache Vergleich der jährlichen Emissionen nicht das vollständige Bild zeigt.
 
-Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben. 
+Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben.
+
+Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und visualisiert.
+Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet.
 
 <!-- Laden der Daten -->
 ## Laden von Daten
-Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, betrachten wir zwei Datensätze. 
+Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, betrachten wir zwei Datensätze [@owid-co2; @owid-energy].
 
 ``` {r}
 library(tidyverse)
