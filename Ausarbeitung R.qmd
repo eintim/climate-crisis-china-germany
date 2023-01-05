@@ -30,8 +30,17 @@ Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, bet
 
 ``` {r}
 library(tidyverse)
-energy <- readr::read_csv('https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv', show_col_types = FALSE)
-co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv', show_col_types = FALSE)
+
+types = readr::cols(
+  .default = 'd',
+  country = 'f',
+  iso_code = 'f',
+  year = 'i'
+)
+
+energy <- readr::read_csv('https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv', col_types = types)
+co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv', col_types = types)
+
 ```
 
 <!-- Bearbeiten/Transformieren der Daten -->
@@ -89,6 +98,16 @@ ggplot() +
 ```
 
 In beiden Datensätzen liegen die Daten exakt aufeinander (vgl. @fig-comparison_energy_and_co2_dataset, @fig-comparison_energy_and_co2_dataset_2). Der Energy-Datensatz reicht zwar nur bis 1900 zurück, was jedoch ausreichend ist. Beide Datensätze lassen sich direkt miteinander vergleichen. 
+
+```{r}
+
+co2 %>%
+  filter(country == 'Afghanistan' & year > 1947) %>%
+  head(13)
+
+```
+
+In der Spalte `cement_co2` sind sowohl Werte mit NA und auch 0. Da diese Werte in einer zeitlich logischen Reihenfolge vorkommen ist davon auszugehen das bei den NA Werten keine Messungen vorliegen. Deshalb werden die NA-Werte nicht weiter behandelt.
 
 <!-- Geeignete Visualisierung und Aggregation der Daten -->
 ## Visualisierung und Aggregation der Daten
@@ -242,7 +261,7 @@ co2 %>%
 
 ```{r}
 #| label: fig-co2_per_capita_europe
-#| fig-cap: CO₂ Emissionen pro Einwohner in Europa im Jahr 2021
+#| fig-cap: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021
 
 library(sf)
 library(giscoR)
@@ -260,7 +279,7 @@ co2 %>%
   xlim(c(2200000, 7150000)) +
   ylim(c(1380000, 5500000)) +
   labs(title = 'CO₂ Emissionen pro Einwohner in Europa', subtitle = '{frame_time}') +
-  transition_time(as.integer(year)) +
+  transition_time(year) +
   ease_aes('linear')
 
 ```
