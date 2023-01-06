@@ -1,6 +1,6 @@
 # China's and Germany's role in the current Climate Crisis 
 
-# german abstract
+## german abstract
 
 Die Klimakrise ist eine der größten Herausforderungen unserer Zeit und die Frage
 der Verantwortung für diese Krise ist von großer Bedeutung. China, als der
@@ -17,7 +17,7 @@ Rolle spielen. Die Arbeit betont die Notwendigkeit, sich auf Lösungen für die
 Klimakrise zu konzentrieren und nicht nur die Verantwortung auf einzelne Länder
 oder Regionen zu schieben.
 
-# english abstract
+## english abstract
 
 The climate crisis is one of the greatest challenges of our time and the question of
 of responsibility for this crisis is of great importance. China, as the
