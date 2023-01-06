@@ -11,11 +11,11 @@ metadata-files:
 <!-- Definition/Formulierung der Fragestellung -->
 ## Fragestellung
 
-Die Klimakrise ist eines der drängendsten Probleme unserer Zeit und betrifft uns alle. Die Frage der Verantwortlichkeit wird dabei häufiger gestellt statt Lösungen
-für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas genannt, da das Land der größte CO2-Emittent der Welt ist. 
+Die Klimakrise ist eines der drängendsten Probleme unserer Zeit und betrifft uns alle. Die Frage der Verantwortlichkeit wird dabei häufiger gestellt, statt Lösungen
+für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas genannt, da das Land der größte CO₂-Emittent der Welt ist. 
 
 Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der westlichen Industriestaaten wie Deutschland heruntergespielt. Bspw. hat 
-FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet [@FDP-Tweet] genau dies versucht. In dem Tweet vergleicht er die jährlichen CO2 Emissionen Chinas und 
+FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet [@FDP-Tweet] genau dies versucht. In dem Tweet vergleicht er die jährlichen CO₂-Emissionen Chinas und 
 Deutschlands.
 
 <blockquote class="twitter-tweet"><p lang="zxx" dir="ltr"><a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a></p>&mdash; Oliver Luksic (@OlliLuksic) <a 
@@ -28,20 +28,17 @@ Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wi
 
 Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und visualisiert.
 Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` [@giscoR] und `sf` 
-[@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert. Damit die Animation gerendert werden kann kommen das Paket `gifski` [
+[@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert. Damit die Animation gerendert werden kann, kommen das Paket `gifski` [
 @gifski] und `transformr` [@transformr] zum Einsatz.
 
 <!-- Laden der Daten -->
 ## Laden von Daten
 Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, betrachten wir zwei Datensätze [@owid-co2; @owid-energy].
 
-``` {r}
+```{r}
 library(tidyverse)
 
 types = readr::cols(
-  .default = 'd',
-  country = 'f',
-  iso_code = 'f',
   year = 'i'
 )
 
@@ -50,11 +47,30 @@ co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/o
 
 ```
 
+Beim Einlesen der Daten wird die Spalte `year` als Integer eingelesen, da sie nur ganze Zahlen beinhaltet.
+Die Spalte `population` beinhaltet auch nur ganze Zahlen, wird aber als Double eingelesen,
+da der Kontinent Asien mehr als 2147483647 (maximaler Wert für Integer) Einwohner*innen hat.
+Die Spalten `country` und `iso_code` werden automatisch als Character eingelesen und die restlichen Spalten erhalten den Datentyp Double.
+
+Damit auch Karten visualisiert werden können laden wir zusätzlich die Ländergrenzen von Europa.
+Diese werden mit dem Paket `giscoR` [@giscoR] von der Eurostat API [@gisco] heruntergeladen.
+Diese Daten können über einen Left-Join auf den Wert `ISO3_CODE` bzw. `iso_code` mit den anderen Datensätzen verbunden werden.
+
+```{r}
+library(giscoR)
+
+EU_countries <- gisco_get_countries(region = "Europe") %>%
+  st_transform(3035)
+
+```
+
+
+
 <!-- Bearbeiten/Transformieren der Daten -->
 ## Glaubwürdigkeit der Daten
 
 Beide Datensätze beinhalten gleiche Spalten, wie Bevölkerungsdaten oder Bruttoinlandsprodukte. Um eine Vergleichbarkeit beider Datensätze zu garantieren, werden beide 
-Daten miteinander verglichen. Zwar stammen beide aus der selben Quelle [@OWID-Github], dennoch ist nicht garantiert, das die Daten übereinstimmen.
+Daten miteinander verglichen. Zwar stammen beide aus derselben Quelle [@OWID-Github], dennoch ist nicht garantiert, das die Daten übereinstimmen.
 
 ```{r}
 #| label: fig-comparison_energy_and_co2_dataset
@@ -163,13 +179,9 @@ Ländern einen hohen Wert ein.
 #| fig-cap: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021
 
 library(sf)
-library(giscoR)
 library(gganimate)
 library(gifski)
 library(transformr)
-
-EU_countries <- gisco_get_countries(region = "Europe") %>%
-  st_transform(3035)
 
 co2 %>%
   filter(year > 1999) %>%
@@ -179,7 +191,13 @@ co2 %>%
   geom_sf(aes(fill = co2_per_capita)) +
   xlim(c(2200000, 7150000)) +
   ylim(c(1380000, 5500000)) +
-  labs(title = 'CO₂ Emissionen pro Einwohner in Europa', subtitle = '{frame_time}') +
+  labs(
+    title = 'CO₂ Emissionen pro Einwohner in Millionen Tonnen in Europa',
+    subtitle = '{frame_time}',
+    caption = paste0(
+      "Source: Eurostat, ", gisco_attributions()
+    ),
+  ) +
   transition_time(year) +
   ease_aes('linear')
 
