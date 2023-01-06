@@ -5,7 +5,7 @@
 Die Klimakrise ist eine der größten Herausforderungen unserer Zeit und die Frage
 der Verantwortung für diese Krise ist von großer Bedeutung. China, als der
 größte CO2-Emittent der Welt, wird oft als Hauptverantwortlicher für die
-Klimakrise genannt. In dieser Arbeit werden zwei Datensätze, den CO2-Datensatz
+Klimakrise genannt. In dieser Arbeit werden zwei Datensätze, den CO₂-Datensatz
 und den Energie-Datensatz von Our World in Data, analysiert und visualisiert, um
 die Rolle Chinas in der Klimakrise zu untersuchen. Durch den Vergleich von
 CO2-Emissionen  und Energie-Verbrauch wird untersucht, ob
@@ -25,7 +25,7 @@ largest CO2 emitter in the world, is often cited as the main culprit for the
 Climate Crisis. In this paper, two datasets, the CO2 dataset
 and the energy dataset from Our World in Data, are analyzed and visualized in order to
 examine China's role in the climate crisis. By comparing
-population data, gross domestic products, and CO2 emissions, the study examines whether
+CO₂ emissions as well as energy consumptions, the study examines whether
 China is actually responsible for the climate crisis, or whether other factors are
 play a role. The results show that while China plays an important role
 in the climate crisis, but other factors, such as the use of
