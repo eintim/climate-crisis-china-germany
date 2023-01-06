@@ -2,6 +2,7 @@
 title: "Ausarbeitung R"
 author: "Theo Krinitz, Tim Horlacher"
 toc: true
+lang: de
 metadata-files: 
   - Quarto Settings/quartosettings.yaml
 ---
@@ -11,29 +12,43 @@ metadata-files:
 <!-- Definition/Formulierung der Fragestellung -->
 ## Fragestellung
 
-Die Klimakrise ist eines der drängendsten Probleme unserer Zeit und betrifft uns alle. Die Frage der Verantwortlichkeit wird dabei häufiger gestellt statt Lösungen
-für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas genannt, da das Land der größte CO2-Emittent der Welt ist. 
+Die Klimakrise ist eines der drängendsten Probleme unserer Zeit. Die Frage 
+der Verantwortlichkeit wird dabei häufiger gestellt statt Lösungen
+für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas 
+genannt, da das Land der größte CO2-Emittent der Welt ist. 
 
-Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der westlichen Industriestaaten wie Deutschland heruntergespielt. Bspw. hat 
-FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet [@FDP-Tweet] genau dies versucht. In dem Tweet vergleicht er die jährlichen CO2 Emissionen Chinas und 
-Deutschlands.
+Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der 
+westlichen Industriestaaten wie Deutschland heruntergespielt. Bspw. hat 
+FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet [@FDP-Tweet] 
+genau dies versucht. In dem Tweet vergleicht er die jährlichen CO2 
+Emissionen Chinas und Deutschlands.
 
 <blockquote class="twitter-tweet"><p lang="zxx" dir="ltr"><a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a></p>&mdash; Oliver Luksic (@OlliLuksic) <a 
 href="https://twitter.com/OlliLuksic/status/1591531008754589704?ref_src=twsrc%5Etfw">November 12, 2022</a></blockquote> <script async src="https://platform.twitter.
 com/widgets.js" charset="utf-8"></script> 
 
-Luksic wurde hier massiv kritisiert, da der einfache Vergleich der jährlichen Emissionen nicht das vollständige Bild zeigt.
+Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text 
+werden wir uns damit auseinandersetzen und versuchen, eine fundierte 
+Antwort darauf zu geben.
 
-Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben.
-
-Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und visualisiert.
-Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` [@giscoR] und `sf` 
-[@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert. Damit die Animation gerendert werden kann kommen das Paket `gifski` [
+Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die 
+Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und 
+visualisiert.
+Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] 
+verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` 
+[@giscoR] und `sf` 
+[@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` 
+[@gganimate] animiert. Damit die Animation gerendert werden kann kommen 
+das Paket `gifski` [
 @gifski] und `transformr` [@transformr] zum Einsatz.
 
 <!-- Laden der Daten -->
 ## Laden von Daten
-Um die Frage zu beantworten, wie verantwortlich China an der Klimakrise ist, betrachten wir zwei Datensätze [@owid-co2; @owid-energy].
+Um die Fragestellung zu beantworten, wie verantwortlich China an der Klimakrise 
+ist, werden zwei Datensätze betrachtet: von Our World in Data (OWID) den 
+CO₂-Datensatz [@owid-co2] und den Energie-Datensatz [@owid-energy]. Beide diese
+Datensätze können im CSV-Format von der OWID-Github-Seite [@OWID-Github] geladen 
+werden.
 
 ``` {r}
 library(tidyverse)
@@ -53,8 +68,10 @@ co2 <- readr::read_csv('https://raw.githubusercontent.com/owid/co2-data/master/o
 <!-- Bearbeiten/Transformieren der Daten -->
 ## Glaubwürdigkeit der Daten
 
-Beide Datensätze beinhalten gleiche Spalten, wie Bevölkerungsdaten oder Bruttoinlandsprodukte. Um eine Vergleichbarkeit beider Datensätze zu garantieren, werden beide 
-Daten miteinander verglichen. Zwar stammen beide aus der selben Quelle [@OWID-Github], dennoch ist nicht garantiert, das die Daten übereinstimmen.
+Beide Datensätze beinhalten gleiche Spalten, wie Bevölkerungsdaten oder 
+Bruttoinlandsprodukte. Um eine Vergleichbarkeit beider Datensätze zu garantieren, werden 
+beide Daten miteinander verglichen. Zwar stammen beide aus der selben Quelle, dennoch 
+ist nicht garantiert, das die Daten übereinstimmen.
 
 ```{r}
 #| label: fig-comparison_energy_and_co2_dataset
@@ -102,10 +119,20 @@ ggplot() +
     )
 ```
 
-In beiden Datensätzen liegen die Daten exakt aufeinander (vgl. @fig-comparison_energy_and_co2_dataset, @fig-comparison_energy_and_co2_dataset_2). Der Energy-Datensatz 
-reicht zwar nur bis 1900 zurück, was jedoch ausreichend ist. Beide Datensätze lassen sich direkt miteinander vergleichen. 
+In beiden Datensätzen liegen die Daten exakt aufeinander (vgl. 
+@fig-comparison_energy_and_co2_dataset, @fig-comparison_energy_and_co2_dataset_2). Der 
+Energy-Datensatz umfasst Daten, die bis 1900 zurückreichen, was für die Zwecke, für die 
+er verwendet wird, ausreichend ist. Beide Datensätze lassen sich direkt miteinander vergleichen.
+
+Beide Datensätze beinhalten auch fehlende Werte. Bspw. in der Spalte `cement_co2` im 
+CO₂-Datensatz sind sowohl Werte mit NA und auch 0 (siehe folgenden Code-Block). Ähnliche 
+Muster existieren in weiteren Spalten in beiden Datensätzen. Da diese Werte in einer 
+zeitlich logischen Reihenfolge vorkommen ist davon auszugehen das bei den NA Werten 
+keine Messungen vorliegen. Deshalb werden die NA-Werte nicht weiter behandelt.
 
 ```{r}
+#| label: fig-NA_in_datasets
+#| fig-cap: Fehlende Werte in den Datensätzen
 
 co2 %>%
   filter(country == 'Afghanistan' & year > 1947) %>%
@@ -113,11 +140,12 @@ co2 %>%
 
 ```
 
-In der Spalte `cement_co2` sind sowohl Werte mit NA und auch 0. Da diese Werte in einer zeitlich logischen Reihenfolge vorkommen ist davon auszugehen das bei den NA 
-Werten keine Messungen vorliegen. Deshalb werden die NA-Werte nicht weiter behandelt.
-
 <!-- Geeignete Visualisierung und Aggregation der Daten -->
 ## Visualisierung und Aggregation der Daten
+
+Zu Beginn wurde geprüft, ob die Auswertung von Hr. Lucsic korrekt war. Dazu wurde der 
+Plot auf den er sich in seinem Tweet [@FDP-Tweet] bezogen hat, nachgebaut (vgl. 
+@fig-co2_per_year).
 
 ```{r}
 #| label: fig-co2_per_year
@@ -134,8 +162,10 @@ co2 %>%
   )
 ```
 
-Hier (vgl. @fig-co2_per_year) ist zu erkennen, dass zwar China ca. 17-mal mehr CO₂ als Deutschland in 2021 ausgestoßen hat. Die Zahlen auf die sich [@FDP-Tweet] 
-bezogen hatte, sind korrekt. Problematisch ist, dass hier nicht die Bevölkerungsgröße einbezogen wird.
+Hier ist zu erkennen, dass China ca. 17-mal mehr CO₂ als Deutschland in 2021 ausgestoßen 
+hat. Die Zahlen auf die sich Lucsic [@FDP-Tweet] bezogen hatte, sind korrekt. 
+Poblematisch ist, dass hier nicht die Bevölkerungsgröße einbezogen wurde. 
+Im Plot @fig-co2_per_year_per_captia ist diese mit berücksichtigt.
 
 ```{r}
 #| label: fig-co2_per_year_per_captia
@@ -152,11 +182,18 @@ co2 %>%
   )
 ```
 
-In diesem Plot (@fig-co2_per_year_per_captia) sind die Bevölkerungsgrößen mit einberechnet. Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ 
-ausgestoßen hat. Zwar wird in dieser Arbeit Chinas Emissionen hauptsächlich mit Deutschland verglichen, die Emissionszahlen aus den weiteren europäischen 
-Industriestaaten sind aber vergleichbar. In der Animation in @fig-co2_per_capita_europe werden die CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021 
-dargestellt. Über den Verlauf der Jahre ist in allen Ländern ein langsamer Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich zu anderen 
-Ländern einen hohen Wert ein.  
+Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ 
+ausgestoßen hat. In 2021 haben China und Deutschland ca. gleich viele CO₂-Emissionen 
+produziert. 
+
+Zwar wird in dieser Arbeit Chinas Emissionen 
+hauptsächlich mit Deutschland verglichen, die Emissionszahlen aus den 
+weiteren europäischen Industriestaaten sind aber vergleichbar. In der Animation in 
+@fig-co2_per_capita_europe werden die CO₂ Emissionen pro Einwohner in 
+Europa von 2000 bis 2021 
+dargestellt. Über den Verlauf der Jahre ist in allen Ländern ein langsamer 
+Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich 
+zu anderen Ländern einen hohen Wert ein.  
 
 ```{r}
 #| label: fig-co2_per_capita_europe
@@ -185,17 +222,34 @@ co2 %>%
 
 ```
 
-China und Deutschland haben 2021 ca. gleich viele CO₂ Emissionen pro 
-Einwohner ausgestoßen. Trotzdem ist festzuhalten, dass in den letzten 20 
-Jahren die Tendenz in Deutschland sinkend war (vgl. @fig-energy_distribution_germany), 
-während Chinas aggressive Wirtschaftspolitik immer mehr Emissionen in Kauf 
-genommen hatte (vgl. @fig-energy_distribution_china). Zwar kommen 
-erneuerbare 
-Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die 
-primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler 
-Atomkraftwerke 
-[@AKW-Abschaltungen] noch wichtiger geworden. Jedoch ist das Ziel bis 2022 
-vollständig aus der Atomkraft auszusteigen nicht erreicht worden.
+Vergleicht man den jährlichen Energieverbrauch zwischen Deutschland und China zeigt sich ein sehr ähnliches Bild wie bei den CO₂-Emissionen (vgl. @fig-energy_per_captia).
+
+```{r}
+#| label: fig-energy_per_captia
+#| fig-cap: Jährlicher Energie-Verbrauch pro Einwohner in kWh
+
+energy %>%
+  filter((country == "China" | country == "Germany") & year > 1965) %>%
+  select(country, year, energy_per_capita) %>%
+  ggplot() +
+  geom_line(aes(x = year, y = energy_per_capita, color = country)) + 
+  labs(title = NULL, x = "Jahr", y = "Energie-Verbrauch pro Einwohner in kWh")
+```
+```{r}
+#| label: fig-energy_consumption_comparison
+#| fig-cap: Jährlicher Energieverbrauch in China und Deutschland
+```
+
+Es ist festzuhalten, dass der Energieverbrauch pro Einwohner in 
+Deutschland höher ist als in China. 1965 verbauchte Deutschland 18,4-mal 
+mehr Energie pro Einwohner als China. In 2021 verbauchte Deutschland pro 
+Einwohner ca. 1,37-mal mehr Energie. Zwar schließt sich diese Lücke, aber 
+nicht indem in Deutschland weniger Energie verbaucht wird, sondern indem China aufschließt. 
+Deutschlands Tendenz sinkt, liegt aber weiterhin über dem Stand von 1965.
+
+Eine wichtige Frage in diesem Zusammenhang ist, woraus die verbrauchte Energie gewonnen wurde. Die Plots
+@fig-energy_distribution_germany und @fig-energy_distribution_china beschreiben welche Energiequellen über
+die Zeit verwendet wurden. 
 
 ```{r}
 #| label: fig-energy_distribution_germany
@@ -235,30 +289,26 @@ energy %>%
   labs(title = NULL, x = 'Jahr', y = 'Jährlicher Energie-Verbrauch in China in TWh')
 ```
 
-Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden jedoch eher als 
-zusätzliche Energiequelle verwendet statt fossile Energieträger abzulösen. Es wurde im Gegensatz zu Detschland aber deutlich stärker in Wasserkraft investiert, was 
-aber auch geographische Hintergründe hat. Dadurch schadet China seinen Nachbarn wie Vietnam, da Flüsse immer weniger Wasser führen [@Lenz2020May].
+Im direkten Vergleich kann man erkennen, dass in Deutschland langsam weniger
+Energie verbaucht wird, während Chinas aggressive Wirtschaftspolitik immer einen
+immer höheren Energieverbrauch in Kauf nimmt. 
 
-Trotzdem ist festzuhalten, dass der Energieverbrauch pro Einwohner in Deutschland höher ist als in China. 1965 verbauchte Deutschland 18,4-mal mehr Energie pro 
-Einwohner als China. In 2021 verbauchte Deutschland pro Einwohner ca. 1,37-mal mehr Energie. Zwar schließt sich diese Lücke, aber nicht indem in Deutschland weniger 
-Strom verbaucht wird, sondern indem China aufschließt (vgl. @fig-energy_per_captia). Deutschlands Tendenz sinkt, liegt aber weiterhin über dem Stand von 1965.
+Zwar kommen in Deutschland erneuerbare 
+Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die 
+primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler 
+Atomkraftwerke [@AKW-Abschaltungen] noch wichtiger geworden. Jedoch ist das Ziel bis 2022 
+vollständig aus der Atomkraft auszusteigen nicht erreicht worden (siehe @fig-energy_distribution_germany).
 
-```{r}
-#| label: fig-energy_per_captia
-#| fig-cap: Jährlicher Energie-Verbrauch pro Einwohner in kWh
+Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar 
+sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden 
+jedoch eher als 
+zusätzliche Energiequelle verwendet statt fossile Energieträger abzulösen. 
+Es wurde im Gegensatz zu Detschland aber deutlich stärker in Wasserkraft 
+investiert, was 
+aber auch geographische Hintergründe hat. Dadurch schadet China seinen 
+Nachbarn wie Vietnam, da Flüsse wie der Mekong immer weniger Wasser führen [@Lenz2020May].
 
-energy %>%
-  filter((country == "China" | country == "Germany") & year > 1965) %>%
-  select(country, year, energy_per_capita) %>%
-  ggplot() +
-  geom_line(aes(x = year, y = energy_per_capita, color = country)) + 
-  labs(title = NULL, x = "Jahr", y = "Energie-Verbrauch pro Einwohner in kWh")
-```
-
-
-In den Plots (@fig-co2_per_year_per_fossil_fuel-1, @fig-co2_per_year_per_fossil_fuel-2) werden die Quellen der CO₂ Emissionen dargestellt. Festzustellen ist, dass 
-Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des 
-Gases aus Russland stammte [@Bundesregierung-Gas].
+In den Plots (@fig-co2_per_year_per_fossil_fuel-1, @fig-co2_per_year_per_fossil_fuel-2) werden die Quellen der CO₂ Emissionen ins Verhältnis gesetzt. 
 
 ```{r}
 #| label: fig-co2_per_year_per_fossil_fuel
@@ -294,8 +344,9 @@ co2 %>%
   labs(title = "Quellen der CO₂ Emissionen China", x = 'Jahr', y = 'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt')
 ```
 
-In China verliert Kohle auch an Bedeutung, trotzdem stammen noch 70% der Emissionen aus Kohle. In Deutschland liegt der Anteil nur noch bei 35%. In China wird die 
-Kohle jedoch nicht abgelöst, sondern es kommen zusätzliche Energiequellen hinzu (vgl. @fig-co2_per_year_per_fossil_fuel_china).
+Festzustellen ist, dass Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des Gases aus Russland stammte [@Bundesregierung-Gas].
+
+In China verliert Kohle auch an Bedeutung, trotzdem stammen noch 70% der Emissionen aus Kohle (vgl. @fig-co2_per_year_per_fossil_fuel-2). In Deutschland liegt der Anteil nur noch bei 35%. In China wird die Kohle jedoch nicht abgelöst, sondern es kommen zusätzliche Energiequellen hinzu (vgl. @fig-co2_per_year_per_fossil_fuel_china).
 
 ```{r}
 #| label: fig-co2_per_year_per_fossil_fuel_china
