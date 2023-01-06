@@ -144,7 +144,36 @@ co2 %>%
   )
 ```
 
-In diesem Plot (@fig-co2_per_year_per_captia) sind die Bevölkerungsgrößen mit einberechnet. Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ ausgestoßen hat. Insbesondere das Wirtschaftswunder in Deutschland war stark auf Kohle und Öl aufgebaut (vgl. @fig-energy_distribution_germany). China und Deutschland haben 2021 ca. gleich viele CO₂ Emissionen pro Einwohner ausgestoßen. Trotzdem ist festzuhalten, dass in den letzten 20 Jahren die Tendenz in Deutschland sinkend war, während Chinas aggressive Wirtschaftspolitik immer mehr Emissionen in Kauf genommen hatte. Zwar kommen erneuerbare Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler Atomkraftwerke [@AKW-Abschaltungen] noch wichtiger geworden. Jedoch ist das Ziel bis 2022 vollständig aus der Atomkraft auszusteigen nicht erreicht worden.
+In diesem Plot (@fig-co2_per_year_per_captia) sind die Bevölkerungsgrößen mit einberechnet. Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ ausgestoßen hat. Zwar wird in dieser Arbeit Chinas Emissionen hauptsächlich mit Deutschland verglichen, die Emissionszahlen aus den weiteren europäischen Industriestaaten sind aber vergleichbar. In der Animation in @fig-co2_per_capita_europe werden die CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021 dargestellt. Über den Verlauf der Jahre ist in allen Ländern ein langsamer Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich zu anderen Ländern einen hohen Wert ein.  
+
+```{r}
+#| label: fig-co2_per_capita_europe
+#| fig-cap: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021
+
+library(sf)
+library(giscoR)
+library(gganimate)
+library(gifski)
+library(transformr)
+
+EU_countries <- gisco_get_countries(region = "Europe") %>%
+  st_transform(3035)
+
+co2 %>%
+  filter(year > 1999) %>%
+  select(iso_code, year, co2_per_capita) %>%
+  left_join(EU_countries, ., by = c("ISO3_CODE" = "iso_code")) %>%
+  ggplot() +
+  geom_sf(aes(fill = co2_per_capita)) +
+  xlim(c(2200000, 7150000)) +
+  ylim(c(1380000, 5500000)) +
+  labs(title = 'CO₂ Emissionen pro Einwohner in Europa', subtitle = '{frame_time}') +
+  transition_time(year) +
+  ease_aes('linear')
+
+```
+
+Insbesondere das Wirtschaftswunder in Deutschland war stark auf Kohle und Öl aufgebaut . China und Deutschland haben 2021 ca. gleich viele CO₂ Emissionen pro Einwohner ausgestoßen. Trotzdem ist festzuhalten, dass in den letzten 20 Jahren die Tendenz in Deutschland sinkend war (vgl. @fig-energy_distribution_germany), während Chinas aggressive Wirtschaftspolitik immer mehr Emissionen in Kauf genommen hatte (vgl. @fig-energy_distribution_china). Zwar kommen erneuerbare Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler Atomkraftwerke [@AKW-Abschaltungen] noch wichtiger geworden. Jedoch ist das Ziel bis 2022 vollständig aus der Atomkraft auszusteigen nicht erreicht worden.
 
 ```{r}
 #| label: fig-energy_distribution_germany
@@ -259,35 +288,9 @@ co2 %>%
 
 ```
 
-```{r}
-#| label: fig-co2_per_capita_europe
-#| fig-cap: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021
 
-library(sf)
-library(giscoR)
-library(gganimate)
-library(gifski)
-library(transformr)
 
-EU_countries <- gisco_get_countries(region = "Europe") %>%
-  st_transform(3035)
 
-co2 %>%
-  filter(year > 1999) %>%
-  select(iso_code, year, co2_per_capita) %>%
-  left_join(EU_countries, ., by = c("ISO3_CODE" = "iso_code")) %>%
-  ggplot() +
-  geom_sf(aes(fill = co2_per_capita)) +
-  xlim(c(2200000, 7150000)) +
-  ylim(c(1380000, 5500000)) +
-  labs(title = 'CO₂ Emissionen pro Einwohner in Europa', subtitle = '{frame_time}') +
-  transition_time(year) +
-  ease_aes('linear')
-
-```
-
-In dem Plot (@fig-co2_per_capita_europe) werden die CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021 dargestellt.
-Über den Verlauf der Jahre ist in allen Ländern ein langsamer Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich zu anderen Ländern einen hohen Wert ein.
 
 <!-- Zusammenfassung und Schlussfolgerung -->
 ## Fazit
