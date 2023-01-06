@@ -22,7 +22,7 @@ Luksic wurde hier massiv kritisiert, da der einfache Vergleich der jährlichen E
 Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben.
 
 Zur Datenanalyse wird die Programmiersprache R [@rlang] verwendet. Die Daten werden mit dem Paket `tidyverse` [@tidyverse] geladen und visualisiert.
-Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` [@giscoR] und `sf` [@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert.
+Für die Visualisierung wurde zusätzlich das Paket `ggstream` [@ggstream] verwendet. Um Kartendaten zu visualisieren, wurden die Pakete `giscoR` [@giscoR] und `sf` [@sf] verwendet. Anschließend wurden die Karten mit dem Paket `gganimate` [@gganimate] animiert. Damit die Animation gerendert werden kann kommen das Paket `gifski` [@gifski] und `transformr` [@transformr] zum Einsatz.
 
 <!-- Laden der Daten -->
 ## Laden von Daten
@@ -266,6 +266,8 @@ co2 %>%
 library(sf)
 library(giscoR)
 library(gganimate)
+library(gifski)
+library(transformr)
 
 EU_countries <- gisco_get_countries(region = "Europe") %>%
   st_transform(3035)
