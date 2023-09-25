@@ -172,10 +172,11 @@ com/widgets.js" charset="utf-8"></script>
 </div>
 <p>Beim Einlesen der Daten wird die Spalte <code>year</code> als Integer eingelesen, da sie nur ganze Zahlen beinhaltet. Die Spalte <code>population</code> beinhaltet auch nur ganze Zahlen, wird aber als Double eingelesen, da der Kontinent Asien mehr als 2147483647 (maximaler Wert für Integer) Einwohner*innen hat. Die Spalten <code>country</code> und <code>iso_code</code> werden automatisch als Character eingelesen und die restlichen Spalten erhalten den Datentyp Double.</p>
 <p>Damit auch Karten visualisiert werden können laden wir zusätzlich die Ländergrenzen von Europa. Diese werden mit dem Paket <code>giscoR</code> <span class="citation" data-cites="giscoR">(<a href="#ref-giscoR" role="doc-biblioref">Hernangómez 2023</a>)</span> von der Eurostat API <span class="citation" data-cites="gisco">(<a href="#ref-gisco" role="doc-biblioref"><span>„<span>GISCO - the Geographic Information System of the COmmission</span>“</span> 2023</a>)</span> heruntergeladen. Diese Daten können über einen Left-Join auf den Wert <code>ISO3_CODE</code> bzw. <code>iso_code</code> mit den anderen Datensätzen verbunden werden.</p>
-<div class="cell" data-hash="Ausarbeitung-R_cache/html/unnamed-chunk-2_d9b1512013786fe68995767f5efa6d42">
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/unnamed-chunk-2_eb1269da00fd36a91adc17ec48a81b1a">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(giscoR)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>EU_countries <span class="ot">&lt;-</span> <span class="fu">gisco_get_countries</span>(<span class="at">region =</span> <span class="st">"Europe"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>EU_countries <span class="ot">&lt;-</span> <span class="fu">gisco_get_countries</span>(<span class="at">region =</span> <span class="st">"Europe"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">3035</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- Bearbeiten/Transformieren der Daten -->
 </section>
