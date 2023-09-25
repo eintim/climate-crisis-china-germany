@@ -72,6 +72,7 @@ Diese Daten können über einen Left-Join auf den Wert `ISO3_CODE` bzw. `iso_cod
 
 ```{r}
 library(giscoR)
+library(sf)
 
 EU_countries <- gisco_get_countries(region = "Europe") %>%
   st_transform(3035)
@@ -214,7 +215,6 @@ zu anderen Ländern einen hohen Wert ein.
 #| label: fig-co2_per_capita_europe
 #| fig-cap: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021
 
-library(sf)
 library(gganimate)
 library(gifski)
 library(transformr)
