@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Theo Krinitz, Tim Horlacher">
+
+<title>Ausarbeitung R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="Ausarbeitung R_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Ausarbeitung R_files/libs/quarto-html/quarto.js"></script>
+<script src="Ausarbeitung R_files/libs/quarto-html/popper.min.js"></script>
+<script src="Ausarbeitung R_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Ausarbeitung R_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Ausarbeitung R_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Ausarbeitung R_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Ausarbeitung R_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Ausarbeitung R_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Ausarbeitung R_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Inhaltsverzeichnis</h2>
+   
+  <ul>
+  <li><a href="#china-als-umstrittenes-thema-in-klimadebatte" id="toc-china-als-umstrittenes-thema-in-klimadebatte" class="nav-link active" data-scroll-target="#china-als-umstrittenes-thema-in-klimadebatte">China als umstrittenes Thema in Klimadebatte</a>
+  <ul class="collapse">
+  <li><a href="#fragestellung" id="toc-fragestellung" class="nav-link" data-scroll-target="#fragestellung">Fragestellung</a></li>
+  <li><a href="#laden-von-daten" id="toc-laden-von-daten" class="nav-link" data-scroll-target="#laden-von-daten">Laden von Daten</a></li>
+  <li><a href="#glaubwürdigkeit-der-daten" id="toc-glaubwürdigkeit-der-daten" class="nav-link" data-scroll-target="#glaubwürdigkeit-der-daten">Glaubwürdigkeit der Daten</a></li>
+  <li><a href="#visualisierung-und-aggregation-der-daten" id="toc-visualisierung-und-aggregation-der-daten" class="nav-link" data-scroll-target="#visualisierung-und-aggregation-der-daten">Visualisierung und Aggregation der Daten</a></li>
+  <li><a href="#fazit" id="toc-fazit" class="nav-link" data-scroll-target="#fazit">Fazit</a></li>
+  <li><a href="#quellen" id="toc-quellen" class="nav-link" data-scroll-target="#quellen">Quellen</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ausarbeitung R</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor:in</div>
+    <div class="quarto-title-meta-contents">
+             <p>Theo Krinitz, Tim Horlacher </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="china-als-umstrittenes-thema-in-klimadebatte" class="level1">
+<h1>China als umstrittenes Thema in Klimadebatte</h1>
+<!-- Definition/Formulierung der Fragestellung -->
+<section id="fragestellung" class="level2">
+<h2 class="anchored" data-anchor-id="fragestellung">Fragestellung</h2>
+<p>Die Klimakrise ist eines der drängendsten Probleme unserer Zeit. Die Frage der Verantwortlichkeit wird dabei häufiger gestellt, statt Lösungen für die Krise zu suchen. In diesem Zusammenhang wird oft die Rolle Chinas genannt, da das Land der größte CO₂-Emittent der Welt ist.</p>
+<p>Teilweise werden dabei aufgrund der großen Emissionen Chinas die Rolle der westlichen Industriestaaten wie Deutschland heruntergespielt. Bspw. hat FDP-Bundestagsabgeordneter Oliver Luksic in folgendem Tweet <span class="citation" data-cites="FDP-Tweet">(<a href="#ref-FDP-Tweet" role="doc-biblioref"><span>„<span>Tweet von Oliver Lucsic</span>“</span> 2022</a>)</span> genau dies versucht. In dem Tweet vergleicht er die jährlichen CO₂-Emissionen Chinas und Deutschlands.</p>
+<blockquote class="twitter-tweet blockquote">
+<p lang="zxx" dir="ltr">
+<a href="https://t.co/WYJz03pNG0">pic.twitter.com/WYJz03pNG0</a>
+</p>
+— Oliver Luksic (<span class="citation" data-cites="OlliLuksic">(<a href="#ref-OlliLuksic" role="doc-biblioref"><strong>OlliLuksic?</strong></a>)</span>) <a href="https://twitter.com/OlliLuksic/status/1591531008754589704?ref_src=twsrc%5Etfw">November 12, 2022</a>
+</blockquote>
+<script async="" src="https://platform.twitter.
+com/widgets.js" charset="utf-8"></script>
+<p>Doch ist China tatsächlich schuldig an der Klimakrise? In diesem Text werden wir uns damit auseinandersetzen und versuchen, eine fundierte Antwort darauf zu geben.</p>
+<p>Zur Datenanalyse wird die Programmiersprache R <span class="citation" data-cites="rlang">(<a href="#ref-rlang" role="doc-biblioref">R Core Team 2022</a>)</span> verwendet. Die Daten werden mit dem Paket <code>tidyverse</code> <span class="citation" data-cites="tidyverse">(<a href="#ref-tidyverse" role="doc-biblioref">Hadley Wickham 2019</a>)</span> geladen und visualisiert. Für die Visualisierung wurde zusätzlich das Paket <code>ggstream</code> <span class="citation" data-cites="ggstream">(<a href="#ref-ggstream" role="doc-biblioref">Sjoberg 2021</a>)</span> verwendet. Um Kartendaten zu visualisieren, wurden die Pakete <code>giscoR</code> <span class="citation" data-cites="giscoR">(<a href="#ref-giscoR" role="doc-biblioref">Hernangómez 2023</a>)</span> und <code>sf</code> <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span> verwendet. Anschließend wurden die Karten mit dem Paket <code>gganimate</code> <span class="citation" data-cites="gganimate">(<a href="#ref-gganimate" role="doc-biblioref">Pedersen und Robinson 2022</a>)</span> animiert. Damit die Animation gerendert werden kann, kommen das Paket <code>gifski</code> <span class="citation" data-cites="gifski">(<a href="#ref-gifski" role="doc-biblioref">Ooms 2022</a>)</span> und <code>transformr</code> <span class="citation" data-cites="transformr">(<a href="#ref-transformr" role="doc-biblioref">Pedersen 2022</a>)</span> zum Einsatz.</p>
+<!-- Laden der Daten -->
+</section>
+<section id="laden-von-daten" class="level2">
+<h2 class="anchored" data-anchor-id="laden-von-daten">Laden von Daten</h2>
+<p>Um die Fragestellung zu beantworten, wie verantwortlich China an der Klimakrise ist, werden zwei Datensätze betrachtet: von Our World in Data (OWID) den CO₂-Datensatz <span class="citation" data-cites="owid-co2">(<a href="#ref-owid-co2" role="doc-biblioref">Hannah Ritchie 2020</a>)</span> und den Energie-Datensatz <span class="citation" data-cites="owid-energy">(<a href="#ref-owid-energy" role="doc-biblioref">Hannah Ritchie, Max Roser, Pablo Rosado 2022</a>)</span>. Beide diese Datensätze können im CSV-Format von der OWID-Github-Seite <span class="citation" data-cites="OWID-Github">(<a href="#ref-OWID-Github" role="doc-biblioref"><span>„<span>Our World in Data</span>“</span> 2023</a>)</span> geladen werden.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/unnamed-chunk-1_7f99dc9b36fcb5188f76c0600bd9baf9">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>types <span class="ot">=</span> readr<span class="sc">::</span><span class="fu">cols</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="st">'i'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>energy <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv'</span>, <span class="at">col_types =</span> types)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">'https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv'</span>, <span class="at">col_types =</span> types)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Beim Einlesen der Daten wird die Spalte <code>year</code> als Integer eingelesen, da sie nur ganze Zahlen beinhaltet. Die Spalte <code>population</code> beinhaltet auch nur ganze Zahlen, wird aber als Double eingelesen, da der Kontinent Asien mehr als 2147483647 (maximaler Wert für Integer) Einwohner*innen hat. Die Spalten <code>country</code> und <code>iso_code</code> werden automatisch als Character eingelesen und die restlichen Spalten erhalten den Datentyp Double.</p>
+<p>Damit auch Karten visualisiert werden können laden wir zusätzlich die Ländergrenzen von Europa. Diese werden mit dem Paket <code>giscoR</code> <span class="citation" data-cites="giscoR">(<a href="#ref-giscoR" role="doc-biblioref">Hernangómez 2023</a>)</span> von der Eurostat API <span class="citation" data-cites="gisco">(<a href="#ref-gisco" role="doc-biblioref"><span>„<span>GISCO - the Geographic Information System of the COmmission</span>“</span> 2023</a>)</span> heruntergeladen. Diese Daten können über einen Left-Join auf den Wert <code>ISO3_CODE</code> bzw. <code>iso_code</code> mit den anderen Datensätzen verbunden werden.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/unnamed-chunk-2_d9b1512013786fe68995767f5efa6d42">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(giscoR)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>EU_countries <span class="ot">&lt;-</span> <span class="fu">gisco_get_countries</span>(<span class="at">region =</span> <span class="st">"Europe"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<!-- Bearbeiten/Transformieren der Daten -->
+</section>
+<section id="glaubwürdigkeit-der-daten" class="level2">
+<h2 class="anchored" data-anchor-id="glaubwürdigkeit-der-daten">Glaubwürdigkeit der Daten</h2>
+<p>Beide Datensätze beinhalten gleiche Spalten, wie Bevölkerungsdaten oder Bruttoinlandsprodukte. Um eine Vergleichbarkeit beider Datensätze zu garantieren, werden beide Daten miteinander verglichen. Zwar stammen beide aus derselben Quelle, dennoch ist nicht garantiert, dass die Daten übereinstimmen.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-comparison_energy_and_co2_dataset_88ee295d1d25016bb99b0447cf239aef">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>energy.filtered <span class="ot">&lt;-</span> energy <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">'Germany'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, gdp, population)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>co2.filtered <span class="ot">&lt;-</span> co2 <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">'Germany'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, gdp, population)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> co2.filtered, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> gdp, <span class="at">color =</span> <span class="st">"CO2"</span>)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> energy.filtered, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> gdp, <span class="at">color =</span> <span class="st">"Energy"</span>)) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Jahr"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Bruttoinlandsprodukt"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Datensatz"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">'CO2'</span>, <span class="st">"Energy"</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"CO2"</span> <span class="ot">=</span> <span class="st">"#f8766d"</span>, <span class="st">"Energy"</span> <span class="ot">=</span> <span class="st">"#00bfc4"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-comparison_energy_and_co2_dataset" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-comparison_energy_and_co2_dataset-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;1: Jährliches BIP in Deutschland</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-comparison_energy_and_co2_dataset_2_9784d4055723284bf6c77d03add16702">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> co2.filtered, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> population, <span class="at">color =</span> <span class="st">"CO2"</span>)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> energy.filtered, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> population, <span class="at">color =</span> <span class="st">"Energy"</span>)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="cn">NULL</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Jahr"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Einwohnerzahlen"</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"Datensatz"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">'CO2'</span>, <span class="st">"Energy"</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"CO2"</span> <span class="ot">=</span> <span class="st">"#f8766d"</span>, <span class="st">"Energy"</span> <span class="ot">=</span> <span class="st">"#00bfc4"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-comparison_energy_and_co2_dataset_2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-comparison_energy_and_co2_dataset_2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;2: Jährliche Einwohnerzahlen in Deutschland</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In beiden Datensätzen liegen die Daten exakt aufeinander (vgl. <a href="#fig-comparison_energy_and_co2_dataset">Abbildung&nbsp;1</a>, <a href="#fig-comparison_energy_and_co2_dataset_2">Abbildung&nbsp;2</a>). Der Energy-Datensatz umfasst Daten, die bis 1900 zurückreichen, was für die Zwecke, für die er verwendet wird, ausreichend ist. Beide Datensätze lassen sich direkt miteinander vergleichen.</p>
+<p>Beide Datensätze beinhalten auch fehlende Werte. Bspw. in der Spalte <code>cement_co2</code> im CO₂-Datensatz sind sowohl Werte mit NA als auch 0 (siehe folgenden Code-Block). Ähnliche Muster existieren in weiteren Spalten in beiden Datensätzen. Da diese Werte in einer zeitlich logischen Reihenfolge vorkommen ist davon auszugehen, dass bei den NA-Werten keine Messungen vorliegen. Deshalb werden die NA-Werte nicht weiter behandelt.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-NA_in_datasets_53114d2f563fb01fd4be02db6c123fb0">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">'Afghanistan'</span> <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1947</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">13</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 79
+   country    year iso_code population      gdp cement_co2 cement_co2_per_capita
+   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;                 &lt;dbl&gt;
+ 1 Afghanis…  1948 AFG         7240542 NA           NA                    NA    
+ 2 Afghanis…  1949 AFG         7356890 NA            0                     0    
+ 3 Afghanis…  1950 AFG         7480464  9.42e 9      0                     0    
+ 4 Afghanis…  1951 AFG         7571542  9.69e 9      0                     0    
+ 5 Afghanis…  1952 AFG         7667534  1.00e10      0                     0    
+ 6 Afghanis…  1953 AFG         7764549  1.06e10      0                     0    
+ 7 Afghanis…  1954 AFG         7864289  1.09e10      0                     0    
+ 8 Afghanis…  1955 AFG         7971933  1.11e10      0                     0    
+ 9 Afghanis…  1956 AFG         8087730  1.16e10      0                     0    
+10 Afghanis…  1957 AFG         8210207  1.16e10      0                     0    
+11 Afghanis…  1958 AFG         8333827  1.22e10      0                     0    
+12 Afghanis…  1959 AFG         8468220  1.26e10      0.018                 0.002
+13 Afghanis…  1960 AFG         8622473  1.30e10      0.018                 0.002
+# ℹ 72 more variables: co2 &lt;dbl&gt;, co2_growth_abs &lt;dbl&gt;, co2_growth_prct &lt;dbl&gt;,
+#   co2_including_luc &lt;dbl&gt;, co2_including_luc_growth_abs &lt;dbl&gt;,
+#   co2_including_luc_growth_prct &lt;dbl&gt;, co2_including_luc_per_capita &lt;dbl&gt;,
+#   co2_including_luc_per_gdp &lt;dbl&gt;, co2_including_luc_per_unit_energy &lt;dbl&gt;,
+#   co2_per_capita &lt;dbl&gt;, co2_per_gdp &lt;dbl&gt;, co2_per_unit_energy &lt;dbl&gt;,
+#   coal_co2 &lt;dbl&gt;, coal_co2_per_capita &lt;dbl&gt;, consumption_co2 &lt;dbl&gt;,
+#   consumption_co2_per_capita &lt;dbl&gt;, consumption_co2_per_gdp &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<!-- Geeignete Visualisierung und Aggregation der Daten -->
+</section>
+<section id="visualisierung-und-aggregation-der-daten" class="level2">
+<h2 class="anchored" data-anchor-id="visualisierung-und-aggregation-der-daten">Visualisierung und Aggregation der Daten</h2>
+<p>Zu Beginn wurde geprüft, ob die Auswertung von Hr. Lucsic korrekt war. Dazu wurde der Plot, auf den er sich in seinem Tweet <span class="citation" data-cites="FDP-Tweet">(<a href="#ref-FDP-Tweet" role="doc-biblioref"><span>„<span>Tweet von Oliver Lucsic</span>“</span> 2022</a>)</span> bezogen hat, nachgebaut (vgl. <a href="#fig-co2_per_year">Abbildung&nbsp;3</a>).</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-co2_per_year_e640e4f0a53f91310a3e069fba15590c">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">|</span> country <span class="sc">==</span> <span class="st">"Germany"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, co2) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2, <span class="at">color =</span> country))<span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="cn">NULL</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Jahr"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"CO₂ in Millionen Tonnen"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-co2_per_year" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_year-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;3: Jährlicher Ausstoß von CO₂ in China und Deutschland</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Hier ist zu erkennen, dass China ca. 17-mal mehr CO₂ als Deutschland in 2021 ausgestoßen hat. Die Zahlen, auf die sich Lucsic <span class="citation" data-cites="FDP-Tweet">(<a href="#ref-FDP-Tweet" role="doc-biblioref"><span>„<span>Tweet von Oliver Lucsic</span>“</span> 2022</a>)</span> bezogen hatte, sind korrekt. Problematisch ist, dass hier nicht die Bevölkerungsgröße einbezogen wurde. Im Plot <a href="#fig-co2_per_year_per_captia">Abbildung&nbsp;4</a> ist diese mit berücksichtigt.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-co2_per_year_per_captia_b5888cabd9b27031ff988b2591492b88">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">|</span> country <span class="sc">==</span> <span class="st">"Germany"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, co2_per_capita) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2_per_capita, <span class="at">color =</span> country))<span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="cn">NULL</span>, </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Jahr"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"CO₂ in Millionen Tonnen pro Einwohner"</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-co2_per_year_per_captia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_year_per_captia-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;4: Jährlicher Ausstoß von CO₂ in China und Deutschland pro Einwohner</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Es zeigt sich, dass die Deutschland für die meiste Zeit deutlich mehr CO₂ ausgestoßen hat. In 2021 haben China und Deutschland ca. gleich viele CO₂-Emissionen produziert.</p>
+<p>Zwar wird in dieser Arbeit Chinas Emissionen hauptsächlich mit Deutschland verglichen, die Emissionszahlen aus den weiteren europäischen Industriestaaten sind aber vergleichbar. In der Animation in <a href="#fig-co2_per_capita_europe">Abbildung&nbsp;5</a> werden die CO₂-Emissionen pro Einwohner in Europa von 2000 bis 2021 dargestellt. Über den Verlauf der Jahre ist in allen Ländern ein langsamer Abfall der Emissionen zu erkennen. Dennoch nimmt Deutschland im Vergleich zu anderen Ländern einen hohen Wert ein.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-co2_per_capita_europe_f678bfcbbd677374a393ca182a20bd5d">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(transformr)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">1999</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(iso_code, year, co2_per_capita) <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(EU_countries, ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ISO3_CODE"</span> <span class="ot">=</span> <span class="st">"iso_code"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> co2_per_capita)) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fu">c</span>(<span class="dv">2200000</span>, <span class="dv">7150000</span>)) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">1380000</span>, <span class="dv">5500000</span>)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'CO₂ Emissionen pro Einwohner in Millionen Tonnen in Europa'</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">'{frame_time}'</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="fu">paste0</span>(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Source: Eurostat, "</span>, <span class="fu">gisco_attributions</span>()</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(year) <span class="sc">+</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-co2_per_capita_europe" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_capita_europe-1.gif" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;5: CO₂ Emissionen pro Einwohner in Europa von 2000 bis 2021</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Vergleicht man den jährlichen Energieverbrauch zwischen Deutschland und China, zeigt sich ein sehr ähnliches Bild wie bei den CO₂-Emissionen (vgl. <a href="#fig-energy_per_captia">Abbildung&nbsp;6</a>).</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-energy_per_captia_53260316cdcccaf89f912c6f1860597f">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>energy <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>((country <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">|</span> country <span class="sc">==</span> <span class="st">"Germany"</span>) <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1965</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, energy_per_capita) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> energy_per_capita, <span class="at">color =</span> country)) <span class="sc">+</span> </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="st">"Jahr"</span>, <span class="at">y =</span> <span class="st">"Energie-Verbrauch pro Einwohner in kWh"</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-energy_per_captia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-energy_per_captia-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;6: Jährlicher Energie-Verbrauch pro Einwohner in kWh</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Es ist festzuhalten, dass der Energieverbrauch pro Einwohner in Deutschland höher ist als in China. 1965 verbraucht Deutschland 18,4-mal mehr Energie pro Einwohner als China. In 2021 verbraucht Deutschland pro Einwohner ca. 1,37-mal mehr Energie. Zwar schließt sich diese Lücke, aber nicht, indem in Deutschland weniger Energie verbraucht wird, sondern indem China aufschließt. Deutschlands Tendenz sinkt, liegt aber weiterhin über dem Stand von 1965.</p>
+<p>Eine wichtige Frage in diesem Zusammenhang ist, woraus die verbrauchte Energie gewonnen wurde. Die Plots <a href="#fig-energy_distribution_germany">Abbildung&nbsp;7</a> und <a href="#fig-energy_distribution_china">Abbildung&nbsp;8</a> beschreiben, welche Energiequellen über die Zeit verwendet wurden.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-energy_distribution_germany_f170fb109b4c2e292cc98e34d4bd6a78">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstream)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>energy <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Germany"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, country, population, <span class="fu">ends_with</span>(<span class="st">"_consumption"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"coal_consumption"</span>, <span class="st">"oil_consumption"</span>, <span class="st">"gas_consumption"</span>, <span class="st">"nuclear_consumption"</span>, <span class="st">"biofuel_consumption"</span>,<span class="st">"solar_consumption"</span>, <span class="st">"wind_consumption"</span>, <span class="st">"hydro_consumption"</span>, <span class="st">"other_renewable_consumption"</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"energy_source"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"energy_consumption"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">energy_source =</span> <span class="fu">gsub</span>(<span class="st">"_consumption"</span>, <span class="st">""</span>, energy_source)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stream</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> energy_consumption, <span class="at">fill =</span> energy_source)) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="st">'Jahr'</span>, <span class="at">y =</span> <span class="st">'Jährlicher Energie-Verbrauch in Deutschland in TWh'</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-energy_distribution_germany" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-energy_distribution_germany-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;7: Jährlicher Energie-Verbrauch in Deutschland aufgeteilt nach Energiequelle</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-energy_distribution_china_c0c2bf7be43d58bb2bea6fc875df6343">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>energy <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"China"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, country, population, <span class="fu">ends_with</span>(<span class="st">"_consumption"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"coal_consumption"</span>, <span class="st">"oil_consumption"</span>, <span class="st">"gas_consumption"</span>, <span class="st">"nuclear_consumption"</span>, <span class="st">"biofuel_consumption"</span>,<span class="st">"solar_consumption"</span>, <span class="st">"wind_consumption"</span>, <span class="st">"hydro_consumption"</span>, <span class="st">"other_renewable_consumption"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"energy_source"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"energy_consumption"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">energy_source =</span> <span class="fu">gsub</span>(<span class="st">"_consumption"</span>, <span class="st">""</span>, energy_source)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stream</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> energy_consumption, <span class="at">fill =</span> energy_source)) <span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="cn">NULL</span>, <span class="at">x =</span> <span class="st">'Jahr'</span>, <span class="at">y =</span> <span class="st">'Jährlicher Energie-Verbrauch in China in TWh'</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-energy_distribution_china" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-energy_distribution_china-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;8: Jährlicher Energie-Verbrauch in China</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Im direkten Vergleich kann man erkennen, dass in Deutschland langsam weniger Energie verbraucht wird, während Chinas aggressive Wirtschaftspolitik immer einen immer höheren Energieverbrauch in Kauf nimmt.</p>
+<p>Zwar kommen in Deutschland erneuerbare Energiequellen langsam, aber die fossilen Energieträger sind weiterhin die primären Energiequellen. Gerade Öl und Gas sind mit dem Abschalten vieler Atomkraftwerke <span class="citation" data-cites="AKW-Abschaltungen">(<a href="#ref-AKW-Abschaltungen" role="doc-biblioref"><span>„<span>Bundesregierung beschlie<span>ß</span>t Ausstieg aus der Kernkraft bis 2022</span>“</span> 2023</a>)</span> noch wichtiger geworden. Jedoch ist das Ziel bis 2022 vollständig aus der Atomkraft auszusteigen nicht erreicht worden (siehe <a href="#fig-energy_distribution_germany">Abbildung&nbsp;7</a>).</p>
+<p>Chinas Energie kommt weiterhin zum größten Teil aus Kohle und Öl. Zwar sind auch hier Ansätze auf dem Weg zu erneuerbaren Energien, sie werden jedoch eher als zusätzliche Energiequelle verwendet, statt fossile Energieträger abzulösen. Es wurde im Gegensatz zu Deutschland aber deutlich stärker in Wasserkraft investiert, was aber auch geografische Hintergründe hat. Dadurch schadet China seinen Nachbarn wie Vietnam, da Flüsse wie der Mekong immer weniger Wasser führen <span class="citation" data-cites="Lenz2020May">(<a href="#ref-Lenz2020May" role="doc-biblioref">Lenz 2020</a>)</span>.</p>
+<p>In den Plots (<a href="#fig-co2_per_year_per_fossil_fuel-1">Abbildung&nbsp;9</a>, <a href="#fig-co2_per_year_per_fossil_fuel-2">Abbildung&nbsp;10</a>) werden die Quellen der CO₂-Emissionen ins Verhältnis gesetzt.</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-co2_per_year_per_fossil_fuel_8e6655620a1e2a3b14f9d1f29677b7ad">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"Germany"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1965</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">ends_with</span>(<span class="st">"co2"</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"co2_source"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"co2_emissions"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">co2_source =</span> <span class="fu">gsub</span>(<span class="st">"_co2"</span>, <span class="st">""</span>, co2_source)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stream</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2_emissions, <span class="at">fill =</span> co2_source), <span class="at">type =</span> <span class="st">"proportional"</span>) <span class="sc">+</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Quellen der CO₂ Emissionen Deutschland"</span>, <span class="at">x =</span> <span class="st">'Jahr'</span>, <span class="at">y =</span> <span class="st">'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1965</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) <span class="sc">%&gt;%</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">ends_with</span>(<span class="st">"co2"</span>),</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"co2_source"</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"co2_emissions"</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">co2_source =</span> <span class="fu">gsub</span>(<span class="st">"_co2"</span>, <span class="st">""</span>, co2_source)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stream</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2_emissions, <span class="at">fill =</span> co2_source), <span class="at">type =</span> <span class="st">"proportional"</span>) <span class="sc">+</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Quellen der CO₂ Emissionen China"</span>, <span class="at">x =</span> <span class="st">'Jahr'</span>, <span class="at">y =</span> <span class="st">'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt'</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-co2_per_year_per_fossil_fuel-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_year_per_fossil_fuel-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;9: Jährliche CO₂ Emissionen der fossilen Energieträger</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-co2_per_year_per_fossil_fuel-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_year_per_fossil_fuel-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;10: Jährliche CO₂ Emissionen der fossilen Energieträger</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Festzustellen ist, dass Kohle in Deutschland immer mehr an Bedeutung verliert. Öl und besonders Gas gewinnen an Bedeutung. Gerade Gas ist problematisch im Kontext, dass ein Großteil des Gases aus Russland stammte <span class="citation" data-cites="Bundesregierung-Gas">(<a href="#ref-Bundesregierung-Gas" role="doc-biblioref"><span>„<span>Gasversorgung: Abh<span>ä</span>ngigkeiten verringern</span>“</span> 2023</a>)</span>.</p>
+<p>In China verliert Kohle auch an Bedeutung, trotzdem stammen noch 70 % der Emissionen aus Kohle (vgl. <a href="#fig-co2_per_year_per_fossil_fuel-2">Abbildung&nbsp;10</a>). In Deutschland liegt der Anteil nur noch bei 35 %. Die Kohle wird in China jedoch nicht abgelöst, es kommen zusätzliche Energiequellen hinzu (vgl. <a href="#fig-co2_per_year_per_fossil_fuel_china">Abbildung&nbsp;11</a>).</p>
+<div class="cell" data-hash="Ausarbeitung-R_cache/html/fig-co2_per_year_per_fossil_fuel_china_77e789f3d4e44958eecd822d2d256ebe">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;</span> <span class="dv">1965</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, coal_co2, cement_co2, flaring_co2, gas_co2, oil_co2) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">ends_with</span>(<span class="st">"co2"</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"co2_source"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"co2_emissions"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">co2_source =</span> <span class="fu">gsub</span>(<span class="st">"_co2"</span>, <span class="st">""</span>, co2_source)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stream</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2_emissions, <span class="at">fill =</span> co2_source)) <span class="sc">+</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Quellen der CO₂ Emissionen China"</span>, <span class="at">x =</span> <span class="st">'Jahr'</span>, <span class="at">y =</span> <span class="st">'Anteil der fossilen Energieträger an CO₂ Emissionen in Mt'</span>)</span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-co2_per_year_per_fossil_fuel_china" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Ausarbeitung-R_files/figure-html/fig-co2_per_year_per_fossil_fuel_china-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Abbildung&nbsp;11: Jährliche CO₂ Emissionen der fossilen Energieträger</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<!-- Zusammenfassung und Schlussfolgerung -->
+</section>
+<section id="fazit" class="level2">
+<h2 class="anchored" data-anchor-id="fazit">Fazit</h2>
+<p>Grundsätzlich wurde festgestellt, dass China ca. 17-mal mehr CO₂ im Jahr 2021 ausgestoßen hat, mit Tendenz steigend. Trotzdem tragen die westlichen Industriestaaten wie Deutschland viel Verantwortung an der momentanen Klimakrise. Zum einen stößt Deutschland pro Einwohner ähnlich viele CO₂-Emissionen aus, zum anderen hat Deutschland über weite Teile seiner Geschichte deutlich mehr Emissionen produziert, worauf der aktuelle Wohlstand auch aufbaut. Zwar liegt Deutschland beim Energieverbrauch pro Person höher als China, beide Nationen sind bei den CO₂-Emissionen pro Person ungefähr gleich auf. In Deutschland sinkt dabei die Tendenz eher, während Chinas Energieverbrauch und CO₂-Emissionen stark wachsen.</p>
+<div style="page-break-after: always;"></div>
+<p>In Deutschland wird zwar in erneuerbare Energien investiert, dies hat aber bisher nicht den erwünschten Effekt. Weiterhin stammt die überwiegende Mehrheit des in Deutschland verbrauchten Stroms aus fossilen Quellen. Zumindest sinkt die Tendenz bei den CO₂-Emissionen leicht. China im Gegensatz baut einen Großteil des Wirtschaftswachstums in den letzten Jahrzehnten auf Kohle. Zwar wird Kohle langsam abgelöst, dies aber nur mit fossilen Energieträgern.</p>
+<div style="page-break-after: always;"></div>
+<p>Zu bedenken ist, dass in dieser Analyse beide Länder unabhängig voneinander betrachtet wurden. Dies ist im heutigen Markt nicht mehr realistisch. Sehr viele Produkte werden in China produziert und in Deutschland verkauft. Jedoch konnte dieser Blickwinkel nicht betrachtet werden. Festzuhalten ist, dass Deutschland und die westlichen Staaten ebenfalls von den Emissionen in China profitieren und viel Produktion nach China verlagert wurde.</p>
+<div style="page-break-after: always;"></div>
+<p>Das ändert jedoch nicht, dass die Emissionen ausgestoßen wurden und werden. Seit dem Klimaabkommen 2015 ist beklagend wenig Fortschritt zu beobachten. Besonders tragisch ist, dass die Tendenz eher steigend ist und damit die Abwendung einer Klimakatastrophe immer unwahrscheinlicher wird.</p>
+</section>
+<section id="quellen" class="level2">
+<h2 class="anchored" data-anchor-id="quellen">Quellen</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-AKW-Abschaltungen" class="csl-entry" role="listitem">
+<span>„<span>Bundesregierung beschlie<span>ß</span>t Ausstieg aus der Kernkraft bis 2022</span>“</span>. 2023. <em>Die Bundesregierung informiert <span><span class="math inline">\(\vert\)</span></span> Startseite</em>. <a href="https://www.bundesregierung.de/breg-de/suche/bundesregierung-beschliesst-ausstieg-aus-der-kernkraft-bis-2022-457246">https://www.bundesregierung.de/breg-de/suche/bundesregierung-beschliesst-ausstieg-aus-der-kernkraft-bis-2022-457246</a>.
+</div>
+<div id="ref-Bundesregierung-Gas" class="csl-entry" role="listitem">
+<span>„<span>Gasversorgung: Abh<span>ä</span>ngigkeiten verringern</span>“</span>. 2023. <a href="https://www.bundesregierung.de/breg-de/themen/gasversorgung-abhaengigkeiten-verringern-441270?view=renderNewsletterHtml">https://www.bundesregierung.de/breg-de/themen/gasversorgung-abhaengigkeiten-verringern-441270?view=renderNewsletterHtml</a>.
+</div>
+<div id="ref-gisco" class="csl-entry" role="listitem">
+<span>„<span>GISCO - the Geographic Information System of the COmmission</span>“</span>. 2023. <a href="https://ec.europa.eu/eurostat/web/gisco/overview">https://ec.europa.eu/eurostat/web/gisco/overview</a>.
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="listitem">
+Hadley Wickham, Jennifer Bryan, Mara Averick. 2019. <span>„Welcome to the <span>tidyverse</span>“</span>. <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+</div>
+<div id="ref-owid-energy" class="csl-entry" role="listitem">
+Hannah Ritchie, Max Roser, Pablo Rosado. 2022. <span>„Energy“</span>. <em>Our World in Data</em>.
+</div>
+<div id="ref-owid-co2" class="csl-entry" role="listitem">
+Hannah Ritchie, Pablo Rosado, Max Roser. 2020. <span>„CO₂ and Greenhouse Gas Emissions“</span>. <em>Our World in Data</em>.
+</div>
+<div id="ref-giscoR" class="csl-entry" role="listitem">
+Hernangómez, Diego. 2023. <em><span>giscoR</span>: Download Map Data from GISCO API - Eurostat</em> (Version 0.3.2). <a href="https://doi.org/10.5281/zenodo.4317946">https://doi.org/10.5281/zenodo.4317946</a>.
+</div>
+<div id="ref-Lenz2020May" class="csl-entry" role="listitem">
+Lenz, Michael. 2020. <span>„<span>Der Mekong wird verdammt</span>“</span>. <em>Spektrum.de</em>, Mai. <a href="https://www.spektrum.de/news/der-mekong-leidet-durch-chinesische-wasserkraftwerke/1738074">https://www.spektrum.de/news/der-mekong-leidet-durch-chinesische-wasserkraftwerke/1738074</a>.
+</div>
+<div id="ref-gifski" class="csl-entry" role="listitem">
+Ooms, Jeroen. 2022. <em>gifski: Highest Quality GIF Encoder</em>. <a href="https://CRAN.R-project.org/package=gifski">https://CRAN.R-project.org/package=gifski</a>.
+</div>
+<div id="ref-OWID-Github" class="csl-entry" role="listitem">
+<span>„<span>Our World in Data</span>“</span>. 2023. <a href="https://github.com/owid">https://github.com/owid</a>.
+</div>
+<div id="ref-sf" class="csl-entry" role="listitem">
+Pebesma, Edzer. 2018. <span>„<span>Simple Features for R: Standardized Support for Spatial Vector Data</span>“</span>. <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div>
+<div id="ref-transformr" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin. 2022. <em>transformr: Polygon and Path Transformations</em>. <a href="https://CRAN.R-project.org/package=transformr">https://CRAN.R-project.org/package=transformr</a>.
+</div>
+<div id="ref-gganimate" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin, und David Robinson. 2022. <em>gganimate: A Grammar of Animated Graphics</em>. <a href="https://CRAN.R-project.org/package=gganimate">https://CRAN.R-project.org/package=gganimate</a>.
+</div>
+<div id="ref-rlang" class="csl-entry" role="listitem">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-ggstream" class="csl-entry" role="listitem">
+Sjoberg, David. 2021. <em>ggstream: Create Streamplots in ’ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggstream">https://CRAN.R-project.org/package=ggstream</a>.
+</div>
+<div id="ref-FDP-Tweet" class="csl-entry" role="listitem">
+<span>„<span>Tweet von Oliver Lucsic</span>“</span>. 2022. <em>Twitter</em>. <a href="https://twitter.com/OlliLuksic/status/1591531008754589704">https://twitter.com/OlliLuksic/status/1591531008754589704</a>.
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Kopiert");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Kopiert");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
